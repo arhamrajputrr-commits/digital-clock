@@ -1,0 +1,135 @@
+
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.1),
+                            0 0 40px rgba(255, 255, 255, 0.05),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 255, 255, 0.2),
+                            0 0 60px rgba(255, 255, 255, 0.1),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @keyframes rotate-slow {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes tick {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+        
+        .countdown-card {
+            animation: pulse-glow 3s ease-in-out infinite, float 6s ease-in-out infinite;
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .countdown-card:nth-child(1) { animation-delay: 0s, 0s; }
+        .countdown-card:nth-child(2) { animation-delay: 0.1s, 0.5s; }
+        .countdown-card:nth-child(3) { animation-delay: 0.2s, 1s; }
+        .countdown-card:nth-child(4) { animation-delay: 0.3s, 1.5s; }
+        
+        .seconds-card {
+            animation: tick 1s ease-in-out infinite, pulse-glow 3s ease-in-out infinite;
+        }
+        
+        .orbit-ring {
+            animation: rotate-slow 20s linear infinite;
+        }
+        
+        .orbit-ring-reverse {
+            animation: rotate-slow 15s linear infinite reverse;
+        }
+        
+        .slide-up {
+            animation: slide-up 0.8s ease-out forwards;
+        }
+        
+        .slide-up-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .slide-up-delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .slide-up-delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .slide-up-delay-4 { animation-delay: 0.4s; opacity: 0; }
+        
+        .shimmer-text {
+            background: linear-gradient(90deg, #ffffff 0%, #666666 25%, #ffffff 50%, #666666 75%, #ffffff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .dot-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        
+        .number-display {
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3),
+                         0 0 60px rgba(255, 255, 255, 0.1);
+        }
+        
+        .progress-ring {
+            stroke-dasharray: 283;
+            stroke-dashoffset: 283;
+            transition: stroke-dashoffset 1s ease-out;
+        }
