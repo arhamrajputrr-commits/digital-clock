@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Year End Countdown</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./style.css
+  ">
   <script src="/_sdk/element_sdk.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
@@ -82,8 +83,90 @@
     </div>
    </div>
   </div>
-  <script src="./script.js"></script>
-  <script>(
+  <script>
+        const defaultConfig = {
+            main_title: "COUNTDOWN TO 2026",
+            subtitle_text: "Every second counts"
+        };
+        
+        let config = { ...defaultConfig };
+        
+        function updateUI() {
+            document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+            document.getElementById('subtitle').textContent = config.subtitle_text || defaultConfig.subtitle_text;
+        }
+        
+        function setProgress(elementId, value, max) {
+            const circumference = 283;
+            const progress = (value / max) * circumference;
+            const offset = circumference - progress;
+            document.getElementById(elementId).style.strokeDashoffset = offset;
+        }
+        
+        function updateCountdown() {
+            const now = new Date();
+            const endYear = new Date(now.getFullYear(), 11, 31, 23, 59, 59, 999);
+            const startYear = new Date(now.getFullYear(), 0, 1, 0, 0, 0, 0);
+            const diff = endYear - now;
+            const totalYear = endYear - startYear;
+            const elapsed = now - startYear;
+            const yearProgress = (elapsed / totalYear) * 100;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+            
+            document.getElementById('days').textContent = String(days).padStart(3, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
+            
+            setProgress('days-progress', days, 365);
+            setProgress('hours-progress', hours, 24);
+            setProgress('minutes-progress', minutes, 60);
+            setProgress('seconds-progress', seconds, 60);
+            
+            document.getElementById('year-percent').textContent = yearProgress.toFixed(2) + '%';
+            document.getElementById('year-progress-bar').style.width = yearProgress + '%';
+        }
+        
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange: async (newConfig) => {
+                    config = { ...defaultConfig, ...newConfig };
+                    updateUI();
+                },
+                mapToCapabilities: (config) => ({
+                    recolorables: [],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues: (config) => new Map([
+                    ["main_title", config.main_title || defaultConfig.main_title],
+                    ["subtitle_text", config.subtitle_text || defaultConfig.subtitle_text]
+                ])
+            });
+        }
+        
+        updateUI();
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+ <script>(
     function(){
         function c(){
             var b=a.contentDocument||a.contentWindow.document;
